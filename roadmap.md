@@ -13,25 +13,25 @@ A 3D interactive graph visualization tool where users can create, edit, and mani
 - [x] Set up Git repository
 
 ### 1.2 Backend Foundation
-- [ ] Choose and install FastAPI (recommended for async WebSocket support)
-- [ ] Set up basic FastAPI server with CORS
-- [ ] Create database schema (SQLite for local dev)
-- [ ] Implement basic CRUD endpoints for graphs
-- [ ] Set up WebSocket endpoint for real-time updates
-- [ ] Create graph data models (Node, Edge, Graph)
+- [x] Choose and install FastAPI (recommended for async WebSocket support)
+- [x] Set up basic FastAPI server with CORS
+- [x] Create database schema (SQLite for local dev)
+- [x] Implement basic CRUD endpoints for graphs
+- [x] Set up WebSocket endpoint for real-time updates
+- [x] Create graph data models (Node, Edge, Graph)
 
 ### 1.3 Frontend Foundation
-- [ ] Set up HTML/CSS/JS structure
-- [ ] Install and configure Three.js
-- [ ] Create basic 3D scene setup
-- [ ] Implement camera controls (OrbitControls)
-- [ ] Add basic lighting and scene initialization
+- [x] Set up HTML/CSS/JS structure
+- [x] Install and configure Three.js
+- [x] Create basic 3D scene setup
+- [x] Implement camera controls (OrbitControls)
+- [x] Add basic lighting and scene initialization
 
 ### 1.4 Basic Graph Rendering
-- [ ] Render nodes as 3D spheres/cubes
-- [ ] Render edges as lines/cylinders between nodes
-- [ ] Implement basic node positioning
-- [ ] Add node labels/text rendering
+- [x] Render nodes as 3D spheres/cubes
+- [x] Render edges as lines/cylinders between nodes
+- [x] Implement basic node positioning
+- [x] Add node labels/text rendering
 
 ## Phase 2: Core Interactivity (Week 3-4)
 

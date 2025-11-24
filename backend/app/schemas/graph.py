@@ -45,3 +45,15 @@ class GraphSchema(BaseModel):
         from_attributes = True
 
 
+class GraphCreateSchema(BaseModel):
+    name: str
+    nodes: List[NodeSchema] = []
+    edges: List[EdgeSchema] = []
+
+
+class GraphUpdateSchema(BaseModel):
+    name: Optional[str] = None
+    nodes: Optional[List[NodeSchema]] = None
+    edges: Optional[List[EdgeSchema]] = None
+
+

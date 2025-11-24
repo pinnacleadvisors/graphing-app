@@ -37,20 +37,26 @@
         </main>
     </div>
 
-    <!-- Three.js from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Three.js from CDN (modern version) -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="js/main.js"></script>
+    
+    <style>
+        /* Node label styling */
+        .node-label {
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
 
-    <!-- Application Scripts -->
-    <script src="js/main.js"></script>
-    <script src="js/scene.js"></script>
-    <script src="js/graph-renderer.js"></script>
-    <script src="js/node-manager.js"></script>
-    <script src="js/edge-manager.js"></script>
-    <script src="js/ui-controller.js"></script>
-    <script src="js/api-client.js"></script>
-    <script src="js/websocket-client.js"></script>
-    <script src="js/sidebar.js"></script>
+    <!-- Application Scripts (loaded via main.js as modules) -->
 </body>
 </html>
 

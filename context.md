@@ -133,7 +133,7 @@ class Node(Base):
     z = Column(Float, nullable=False, default=0.0)
     color = Column(String, default="#3498db")  # Hex color
     size = Column(Float, default=1.0)
-    metadata = Column(JSON, nullable=True)  # Additional properties
+    extra_data = Column(JSON, nullable=True)  # Additional properties
     
     # Relationship
     graph = relationship("Graph", back_populates="nodes")
@@ -153,7 +153,7 @@ class Edge(Base):
     weight = Column(Float, default=1.0)
     directed = Column(Boolean, default=False)
     color = Column(String, default="#95a5a6")
-    metadata = Column(JSON, nullable=True)
+    extra_data = Column(JSON, nullable=True)
     
     # Relationships
     graph = relationship("Graph", back_populates="edges")
@@ -173,7 +173,7 @@ class NodeSchema(BaseModel):
     z: float
     color: str = "#3498db"
     size: float = 1.0
-    metadata: Optional[dict] = None
+    extra_data: Optional[dict] = None
 
 class EdgeSchema(BaseModel):
     id: Optional[int] = None
@@ -182,7 +182,7 @@ class EdgeSchema(BaseModel):
     weight: float = 1.0
     directed: bool = False
     color: str = "#95a5a6"
-    metadata: Optional[dict] = None
+    extra_data: Optional[dict] = None
 
 class GraphSchema(BaseModel):
     id: Optional[int] = None

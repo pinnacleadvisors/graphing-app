@@ -1,9 +1,10 @@
 """
 FastAPI application entry point
 """
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import graphs, projects, ai
+from app.api.websocket import websocket_endpoint
 
 app = FastAPI(title="3D Graphing API", version="0.1.0")
 
@@ -30,4 +31,10 @@ async def root():
 @app.get("/health")
 async def health():
     return {"status": "healthy"}
+
+
+@app.websocket("/ws/{graph_id}")
+async def websocket_route(websocket: WebSocket, graph_id: int):
+    """WebSocket endpoint for real-time graph updates"""
+    await websocket_endpoint(websocket, graph_id)
 

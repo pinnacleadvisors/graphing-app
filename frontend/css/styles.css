@@ -62,12 +62,19 @@ body {
     flex: 1;
     position: relative;
     overflow: hidden;
+    background-color: #1a1a1a;
 }
 
 #canvas-container canvas {
     display: block;
     width: 100%;
     height: 100%;
+    outline: none; /* Remove focus outline */
+    cursor: grab;
+}
+
+#canvas-container canvas:active {
+    cursor: grabbing;
 }
 
 

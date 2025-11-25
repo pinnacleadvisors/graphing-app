@@ -101,6 +101,40 @@ class APIClient {
             method: 'DELETE'
         });
     }
+
+    // Project endpoints
+    async getProjects(search = null) {
+        const query = search ? `?search=${encodeURIComponent(search)}` : '';
+        return this.request(`/api/projects${query}`);
+    }
+
+    async getProject(projectId) {
+        return this.request(`/api/projects/${projectId}`);
+    }
+
+    async createProject(projectData) {
+        return this.request('/api/projects', {
+            method: 'POST',
+            body: JSON.stringify(projectData)
+        });
+    }
+
+    async updateProject(projectId, projectData) {
+        return this.request(`/api/projects/${projectId}`, {
+            method: 'PUT',
+            body: JSON.stringify(projectData)
+        });
+    }
+
+    async deleteProject(projectId) {
+        return this.request(`/api/projects/${projectId}`, {
+            method: 'DELETE'
+        });
+    }
+
+    async getProjectMetadata(projectId) {
+        return this.request(`/api/projects/${projectId}/metadata`);
+    }
 }
 
 // Export singleton instance

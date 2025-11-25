@@ -5,6 +5,7 @@ import { graphRenderer } from './graph-renderer.js';
 import { apiClient } from './api-client.js';
 
 let currentGraphId = null;
+let currentProjectId = null;
 let autoSaveTimeout = null;
 const AUTO_SAVE_DELAY = 2000; // 2 seconds
 
@@ -100,6 +101,34 @@ function setupKeyboardShortcuts() {
 }
 
 /**
+ * Load a project (which includes its graph)
+ */
+async function loadProject(project) {
+    if (!project) return;
+
+    try {
+        currentProjectId = project.id;
+        
+        // If project has a graph, load it
+        if (project.graph && project.graph.id) {
+            await loadGraph(project.graph.id);
+        } else {
+            // Project exists but has no graph yet - clear the scene
+            currentGraphId = null;
+            nodeManager.setCurrentGraphId(null);
+            edgeManager.setCurrentGraphId(null);
+            graphRenderer.clearGraph();
+        }
+        
+        console.log(`Loaded project: ${project.name}`);
+        return project;
+    } catch (error) {
+        console.error('Failed to load project:', error);
+        throw error;
+    }
+}
+
+/**
  * Load a graph from the backend
  */
 async function loadGraph(graphId) {
@@ -191,7 +220,21 @@ async function saveGraph() {
 }
 
 /**
- * Create a new graph
+ * Create a new project (which will create a graph automatically)
+ */
+async function createNewProject(projectData) {
+    try {
+        // Projects are created via the sidebar, so this is mainly for internal use
+        // The sidebar handles project creation
+        console.log('Project creation handled by sidebar');
+    } catch (error) {
+        console.error('Failed to create project:', error);
+        throw error;
+    }
+}
+
+/**
+ * Create a new graph (legacy - now projects handle this)
  */
 async function createNewGraph(name = 'New Graph') {
     try {
@@ -256,15 +299,25 @@ function getCurrentGraphId() {
     return currentGraphId;
 }
 
+/**
+ * Get current project ID
+ */
+function getCurrentProjectId() {
+    return currentProjectId;
+}
+
 // Export UI controller API
 export const uiController = {
     init,
+    loadProject,
     loadGraph,
     saveGraph,
+    createNewProject,
     createNewGraph,
     scheduleAutoSave,
     onNodeSelected,
-    getCurrentGraphId
+    getCurrentGraphId,
+    getCurrentProjectId
 };
 
 

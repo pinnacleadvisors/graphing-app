@@ -51,4 +51,45 @@
     color: #999;
 }
 
+.project-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.25rem;
+}
+
+.project-delete-btn {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.project-delete-btn:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.empty-state,
+.error-state {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.error-state {
+    color: #dc3545;
+}
+
 

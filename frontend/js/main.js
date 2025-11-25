@@ -2,6 +2,7 @@
 import { sceneManager } from './scene.js';
 import { graphRenderer } from './graph-renderer.js';
 import { uiController } from './ui-controller.js';
+import { sidebar } from './sidebar.js';
 import { nodeManager } from './node-manager.js';
 import * as THREE from 'three';
 
@@ -28,12 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Initialize UI controller (this will initialize node and edge managers)
             uiController.init();
             
-            // Create a new empty graph to start with
-            uiController.createNewGraph('My First Graph').then(() => {
-                console.log('Application ready');
-            }).catch(error => {
-                console.error('Failed to create initial graph:', error);
+            // Initialize sidebar
+            sidebar.init();
+            
+            // Connect sidebar callbacks
+            sidebar.onProjectSelect((project) => {
+                uiController.loadProject(project);
             });
+            
+            sidebar.onProjectCreate((project) => {
+                // Project is already loaded by sidebar, just ensure it's displayed
+                if (project && project.graph) {
+                    uiController.loadProject(project);
+                }
+            });
+            
+            console.log('Application ready');
         } else {
             console.error('Failed to initialize 3D scene');
         }

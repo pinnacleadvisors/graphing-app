@@ -68,8 +68,24 @@ function setupButtonListeners() {
     // Generate Graph button (for Phase 4)
     const generateGraphBtn = document.getElementById('generate-graph-btn');
     if (generateGraphBtn) {
-        generateGraphBtn.addEventListener('click', () => {
-            console.log('AI graph generation - to be implemented in Phase 4');
+        generateGraphBtn.addEventListener('click', async () => {
+            // Import and show AI generator modal
+            const { aiGenerator } = await import('./ai-generator.js');
+            aiGenerator.show('description');
+        });
+    }
+
+    // Modify Graph button (for Phase 4)
+    const modifyGraphBtn = document.getElementById('modify-graph-btn');
+    if (modifyGraphBtn) {
+        modifyGraphBtn.addEventListener('click', async () => {
+            if (!currentGraphId) {
+                alert('Please load a graph first before modifying it.');
+                return;
+            }
+            // Import and show AI generator modal for modification
+            const { aiGenerator } = await import('./ai-generator.js');
+            aiGenerator.showModifyDialog();
         });
     }
 }

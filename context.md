@@ -225,11 +225,16 @@ class ProjectSchema(BaseModel):
 
 #### AI
 - `POST /api/ai/generate` - Generate new graph from description
-  - Request: `{ "description": "Create a social network graph with 10 nodes" }`
-  - Response: `GraphSchema`
+  - Request: `{ "description": "Create a social network graph with 10 nodes", "graph_name": "AI Generated Graph" }`
+  - Response: `{ "success": bool, "graph": GraphSchema, "prompt": str (if AI not configured), "error": str }`
 - `POST /api/ai/modify` - Modify existing graph
   - Request: `{ "graph_id": 1, "instruction": "Add clustering layout" }`
-  - Response: `GraphSchema`
+  - Response: `{ "success": bool, "graph": GraphSchema, "prompt": str (if AI not configured), "error": str }`
+- `POST /api/ai/execute-code` - Execute Python code directly to generate graph
+  - Request: `{ "code": "python code string", "graph_name": "AI Generated Graph" }`
+  - Response: `{ "success": bool, "graph": GraphSchema, "error": str }`
+- `GET /api/ai/template` - Get template for manual code generation
+  - Response: Template and examples for use with ChatGPT/Claude
 
 ### WebSocket Endpoint
 
@@ -277,28 +282,57 @@ class ProjectSchema(BaseModel):
 
 ### AI Integration
 
-#### Option 1: OpenAI API
+The application supports AI-powered graph generation through multiple methods:
+
+#### Manual Code Generation (Recommended for now)
+- **Template File**: `GRAPH_GENERATION_TEMPLATE.md` provides a template for use with ChatGPT/Claude
+- **Process**: 
+  1. Copy template from `GRAPH_GENERATION_TEMPLATE.md` or use `/api/ai/template` endpoint
+  2. Paste into ChatGPT/Claude with your graph description
+  3. Copy generated Python code
+  4. Paste into "From Code" tab in the Generate Graph dialog
+- **Pros**: Free, no API keys needed, works with any AI chat service
+- **Cons**: Requires manual copy/paste
+
+#### AI Service Integration (Future)
+The system is designed to support direct AI API integration. To enable:
+
+1. Set environment variables:
+   - `AI_PROVIDER`: "openai", "ollama", or "huggingface"
+   - `AI_API_KEY`: Your API key
+
+2. The AI service will automatically use the configured provider
+
+**Option 1: OpenAI API**
 - **Pros**: High quality, easy integration
 - **Cons**: Requires API key, costs money
 - **Usage**: Generate Python code for graph layouts
 
-#### Option 2: Ollama (Local)
+**Option 2: Ollama (Local)**
 - **Pros**: Free, runs locally, privacy
 - **Cons**: Requires local setup, may be slower
 - **Usage**: Same as OpenAI but local
 
-#### Option 3: Hugging Face
+**Option 3: Hugging Face**
 - **Pros**: Open source models, free tier
 - **Cons**: May require more setup
 
 ### Code Execution Safety
 
 For executing AI-generated Python code:
-- Use `subprocess` with restricted environment
-- Timeout execution (e.g., 5 seconds)
-- Limit imports (only allow networkx, numpy, etc.)
-- Run in isolated process
-- Validate output before applying to graph
+- **Validation**: Code is validated before execution for blocked keywords and syntax errors
+- **Import Restrictions**: Only allowed imports: `networkx`, `numpy`, `math`, `random`, `json`
+- **Blocked Operations**: File I/O, system calls, eval/exec, dangerous imports are blocked
+- **Execution**: Uses `subprocess` with timeout (10 seconds)
+- **Isolation**: Runs in separate process with restricted environment
+- **Output Validation**: Validates that output contains required 'nodes' and 'edges' keys
+- **Error Handling**: Comprehensive error messages for debugging
+
+**Code Format Requirements:**
+- Code must assign result to variable `result`
+- Result must be a dictionary with 'nodes' and 'edges' keys
+- Nodes: list of dicts with `label`, `x`, `y`, `z`, optional `color`, `size`
+- Edges: list of dicts with `source_id`, `target_id` (indices into nodes list), optional `weight`, `directed`, `color`
 
 ## User Flow
 
@@ -317,16 +351,32 @@ For executing AI-generated Python code:
    - Changes auto-save to backend via API
 
 3. **AI Generation**
-   - User clicks "Generate Graph"
-   - Modal opens with text input
-   - User enters description: "Create a tree graph with 15 nodes"
-   - Frontend sends request to `/api/ai/generate`
-   - Backend calls AI service, generates Python code
-   - Code executes, creates graph structure
-   - Graph data returned to frontend
+   - User clicks "Generate Graph (AI)" button
+   - Modal opens with two tabs: "From Description" and "From Code"
+   - **Option A - From Description:**
+     - User enters description: "Create a tree graph with 15 nodes"
+     - Frontend sends request to `/api/ai/generate`
+     - If AI configured: Backend calls AI service, generates Python code, executes it
+     - If AI not configured: Backend returns a prompt that user can use with ChatGPT/Claude
+     - Code executes, creates graph structure
+     - Graph data returned to frontend
+   - **Option B - From Code:**
+     - User pastes Python code (from ChatGPT/Claude or written manually)
+     - Frontend sends request to `/api/ai/execute-code`
+     - Backend executes code safely in sandboxed environment
+     - Graph data returned to frontend
    - 3D scene updates with new graph
+   - New project is automatically created for the generated graph
 
-4. **Project Management**
+4. **AI Graph Modification**
+   - User clicks "Modify Graph (AI)" button (requires loaded graph)
+   - Modal opens with text input for modification instruction
+   - User enters instruction: "Apply spring layout algorithm"
+   - Frontend sends request to `/api/ai/modify`
+   - Similar process to generation - either uses AI or returns prompt
+   - Modified graph updates the current graph
+
+5. **Project Management**
    - Sidebar shows list of projects
    - User clicks project → loads graph
    - User can delete, rename projects

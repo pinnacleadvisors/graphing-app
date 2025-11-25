@@ -135,6 +135,32 @@ class APIClient {
     async getProjectMetadata(projectId) {
         return this.request(`/api/projects/${projectId}/metadata`);
     }
+
+    // AI endpoints
+    async generateGraph(description, graphName = "AI Generated Graph") {
+        return this.request('/api/ai/generate', {
+            method: 'POST',
+            body: JSON.stringify({ description, graph_name: graphName })
+        });
+    }
+
+    async modifyGraph(graphId, instruction) {
+        return this.request('/api/ai/modify', {
+            method: 'POST',
+            body: JSON.stringify({ graph_id: graphId, instruction })
+        });
+    }
+
+    async executeCode(code, graphName = "AI Generated Graph") {
+        return this.request('/api/ai/execute-code', {
+            method: 'POST',
+            body: JSON.stringify({ code, graph_name: graphName })
+        });
+    }
+
+    async getGenerationTemplate() {
+        return this.request('/api/ai/template');
+    }
 }
 
 // Export singleton instance

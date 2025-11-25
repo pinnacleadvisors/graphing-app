@@ -6,6 +6,9 @@ import { sidebar } from './sidebar.js';
 import { nodeManager } from './node-manager.js';
 import * as THREE from 'three';
 
+// Make sidebar available globally for AI generator
+window.sidebar = sidebar;
+
 console.log('3D Graphing App initialized');
 
 // Make graphRenderer and uiController available globally for scene.js animation loop

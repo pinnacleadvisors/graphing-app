@@ -18,6 +18,31 @@ An interactive 3D graph visualization tool where users can create, edit, and man
 - **Database**: SQLite (local) / PostgreSQL (production)
 - **AI**: OpenAI API / Ollama / Hugging Face
 
+## Quick Start
+
+### Automated Setup (Recommended)
+
+**Mac/Linux:**
+```bash
+chmod +x open.sh
+./open.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+.\open.ps1
+```
+
+This will automatically:
+- Set up virtual environment (if needed)
+- Install dependencies (if needed)
+- Initialize database (if needed)
+- Start backend server on `http://localhost:8000`
+- Start frontend server on `http://localhost:8080`
+- Open your browser automatically
+
+Press `Ctrl+C` to stop all servers.
+
 ## Local Development Setup
 
 ### Prerequisites

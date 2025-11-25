@@ -371,9 +371,31 @@ For executing AI-generated Python code:
 
 ## Development Workflow
 
-### Local Setup
+### Quick Start (Recommended)
+
+**Mac/Linux:**
+```bash
+chmod +x open.sh
+./open.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+.\open.ps1
+```
+
+The `open.sh` (Mac/Linux) or `open.ps1` (Windows) script will:
+- Check and create virtual environment if needed
+- Install backend dependencies if needed
+- Initialize database if needed
+- Start backend server on `http://localhost:8000`
+- Start frontend server on `http://localhost:8080`
+- Automatically open the browser to the frontend
+- Handle cleanup on exit (Ctrl+C)
+
+### Manual Local Setup
 1. Create virtual environment: `python -m venv venv`
-2. Activate: `source venv/bin/activate` (Mac/Linux)
+2. Activate: `source venv/bin/activate` (Mac/Linux) or `venv\Scripts\activate` (Windows)
 3. Install backend: `pip install -r backend/requirements.txt`
 4. Initialize database: `python backend/app/database/init_db.py`
 5. Run backend: `uvicorn backend.app.main:app --reload`

@@ -36,25 +36,25 @@ A 3D interactive graph visualization tool where users can create, edit, and mani
 ## Phase 2: Core Interactivity (Week 3-4)
 
 ### 2.1 Node Management
-- [ ] Add "Add Node" button functionality
-- [ ] Implement node dragging in 3D space
-- [ ] Add node selection (click to select)
-- [ ] Implement node deletion
-- [ ] Add node properties panel (name, color, size)
+- [x] Add "Add Node" button functionality
+- [x] Implement node dragging in 3D space
+- [x] Add node selection (click to select)
+- [x] Implement node deletion
+- [x] Add node properties panel (name, color, size)
 
 ### 2.2 Edge Management
-- [ ] Implement edge creation (click two nodes to connect)
-- [ ] Add edge deletion
-- [ ] Visual feedback for edge creation mode
-- [ ] Support directed/undirected edges
-- [ ] Edge weight visualization
+- [x] Implement edge creation (click two nodes to connect)
+- [x] Add edge deletion
+- [x] Visual feedback for edge creation mode
+- [x] Support directed/undirected edges
+- [x] Edge weight visualization
 
 ### 2.3 Data Persistence
-- [ ] Connect frontend to backend API
-- [ ] Implement graph save functionality
-- [ ] Implement graph load functionality
-- [ ] Add auto-save feature
-- [ ] Handle graph state synchronization
+- [x] Connect frontend to backend API
+- [x] Implement graph save functionality
+- [x] Implement graph load functionality
+- [x] Add auto-save feature
+- [x] Handle graph state synchronization
 
 ## Phase 3: Sidebar & Project Management (Week 5)
 
